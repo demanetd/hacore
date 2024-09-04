@@ -1,0 +1,9 @@
+{
+  "domain": "wlopenbanking",
+  "name": "Worldline OpenBanking",
+  "codeowners": [],
+  "documentation": "",
+  "iot_class": "cloud_polling",
+  "loggers": ["wlopenbanking"],
+  "requirements": []
+}
