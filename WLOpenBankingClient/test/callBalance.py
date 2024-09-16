@@ -23,7 +23,7 @@ try:
     # Requests by user id
     xreqid = str(uuid.uuid4())
     psuid = "123456"
-    consentid = "1126569"
+    consentid = "1126608"
     aspspid = "20116"
     accountid = "182794"
     api_response = api_instance.balances(
@@ -34,7 +34,7 @@ try:
     pprint(api_response)
     print("## end of answer ##")
 
-    # print(api_response.consent_status)
+    print(api_response.balances[0].amount)
 except ApiException as e:
     print(
         "Exception when calling AccountInformationServiceApi.consent_extended: %s\n" % e

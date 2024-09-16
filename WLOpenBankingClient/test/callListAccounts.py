@@ -23,7 +23,7 @@ try:
     # Requests by user id
     xreqid = str(uuid.uuid4())
     psuid = "123456"
-    consentid = "1126569"
+    # consentid = "1126569"
     aspspid = "20116"
     api_response = api_instance.accounts(
         psuid, aspspid, xreqid, datetime.datetime.now()

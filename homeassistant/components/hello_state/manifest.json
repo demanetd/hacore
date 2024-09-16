@@ -1,0 +1,13 @@
+{
+  "domain": "hello_state",
+  "name": "Hello, state!",
+  "codeowners": ["@demanetd"],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://www.home-assistant.io/integrations/hello_state",
+  "homekit": {},
+  "iot_class": "cloud_polling",
+  "requirements": [],
+  "ssdp": [],
+  "zeroconf": []
+}

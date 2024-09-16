@@ -5,12 +5,10 @@ from __future__ import annotations
 import datetime
 from datetime import timedelta
 import logging
+import sys
 
 import requests
 import voluptuous as vol
-
-import os
-import sys
 
 sys.path.insert(0, "/workspaces/hacore/WLOpenBankingClient")
 
