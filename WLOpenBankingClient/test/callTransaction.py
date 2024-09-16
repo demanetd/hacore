@@ -7,23 +7,22 @@ import datetime
 from pprint import pprint
 import uuid
 
-import swagger_client
-from swagger_client.rest import ApiException
+import ais_client
+from ais_client.rest import ApiException
 
 # Configure API key authorization: sso_auth
-configuration = swagger_client.Configuration()
+configuration = ais_client.Configuration()
 configuration.debug = True
 
-api_client = swagger_client.ApiClient(configuration)
+api_client = ais_client.ApiClient(configuration)
 api_client.set_default_header("Authorization", "Bearer d5bd895a4080dbbb469a207460b6fca")
 
-api_instance = swagger_client.AccountInformationServiceApi(api_client)
+api_instance = ais_client.AccountInformationServiceApi(api_client)
 
 try:
     # Requests by user id
     xreqid = str(uuid.uuid4())
     psuid = "123456"
-    # consentid = '1126450'
     aspspid = "20101"
     accountid = "182760"
     api_response = api_instance.transactions(

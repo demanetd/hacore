@@ -14,8 +14,8 @@ sys.path.insert(0, "/workspaces/hacore/WLOpenBankingClient")
 
 import uuid
 
-import swagger_client
-from swagger_client.rest import ApiException
+import ais_client
+from ais_client.rest import ApiException
 
 from homeassistant.components.sensor import (
     PLATFORM_SCHEMA as SENSOR_PLATFORM_SCHEMA,
@@ -121,13 +121,13 @@ class WlOpenBankingBalanceSensor(SensorEntity):
     def update(self) -> None:
         """Fetch new state data for the sensor."""
         # self._wlOpenBanking_account.update_balance_data()
-        configuration = swagger_client.Configuration()
+        configuration = ais_client.Configuration()
         configuration.debug = True
-        api_client = swagger_client.ApiClient(configuration)
+        api_client = ais_client.ApiClient(configuration)
         api_client.set_default_header(
             "Authorization", "Bearer d5bd895a4080dbbb469a207460b6fca"
         )
-        api_instance = swagger_client.AccountInformationServiceApi(api_client)
+        api_instance = ais_client.AccountInformationServiceApi(api_client)
         try:
             # Requests by user id
             xreqid = str(uuid.uuid4())

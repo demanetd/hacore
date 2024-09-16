@@ -7,35 +7,32 @@ import datetime
 from pprint import pprint
 import uuid
 
-import swagger_client
-from swagger_client.models.permission_enum import PermissionEnum
-from swagger_client.rest import ApiException
+import pis_client
+from pis_client.rest import ApiException
 
 # Configure API key authorization: sso_auth
-configuration = swagger_client.Configuration()
+configuration = pis_client.Configuration()
 configuration.debug = True
 
-api_client = swagger_client.ApiClient(configuration)
+api_client = pis_client.ApiClient(configuration)
 api_client.set_default_header(
     "Authorization", "Bearer 97fb13a74c712d8c7a50476e71769eaf"
 )
 
-api_instance = swagger_client.PaymentInitiationServiceApi(api_client)
-# .AccountInformationServiceApi(api_client)
+api_instance = pis_client.PaymentInitiationServiceApi(api_client)
 psuid = "123456"
 aspspid = "20116"
 
-amount = swagger_client.models.Amount(amount="100")
-commonData = swagger_client.PaymentInitiationRequestBasic(amount=amount)
-body = swagger_client.PaymentInitiationRequest(common_payment_data=commonData)
-# body.psu_data.aspsp_id = aspspid
+amount = pis_client.models.Amount(amount="100.0")
+commonData = pis_client.PaymentInitiationRequestBasic(amount=amount)
+body = pis_client.PaymentInitiationRequest(common_payment_data=commonData)
 pprint(body)
 
 try:
     # Requests by user id
     xreqid = str(uuid.uuid4())
     api_response = api_instance.payment_initiate(
-        xreqid, datetime.datetime.now(), psuid, body=body
+        xreqid, datetime.datetime.now(), body=body
     )
 
     print("## answer ##")
