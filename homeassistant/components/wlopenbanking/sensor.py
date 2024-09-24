@@ -133,8 +133,8 @@ class WlOpenBankingBalanceSensor(SensorEntity):
             xreqid = str(uuid.uuid4())
             psuid = "123456"
             consentid = "1126608"
-            aspspid = "20116"
-            accountid = "182794"
+            aspspid = "20101"
+            accountid = "182760"
             api_response = api_instance.balances(
                 psuid, aspspid, accountid, xreqid, datetime.datetime.now()
             )
