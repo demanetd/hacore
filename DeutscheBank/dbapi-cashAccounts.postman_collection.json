@@ -1,0 +1,539 @@
+{
+	"info": {
+		"_postman_id": "9e46b6e4-c8b7-4cb8-bde4-bbf933ad9f13",
+		"name": "dbapi-cashAccounts",
+		"description": "Gives you an overview of all savings and current accounts of your customers.\n\nContact Support:\n Email: bank.api@db.com",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33869253"
+	},
+	"item": [
+		{
+			"name": "/",
+			"item": [
+				{
+					"name": "Reads all cash accounts of a customer.",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "state",
+									"value": "aTestingState",
+									"type": "string"
+								},
+								{
+									"key": "clientSecret",
+									"value": "Jecoa6J4vqx51nZm0cWicKNogizq0XstW3qJ7sAfOJVE8ZhGbSeIxIhf3aINFPgawcbSmqBd7WdsXzoKbOwziQ",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "811b134b-23d1-4470-8f04-a12fb3799d3f",
+									"type": "string"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "http://localhost:8100",
+									"type": "string"
+								},
+								{
+									"key": "scope",
+									"value": "read_accounts read_accounts_list verify_account_ownership openid offline_access",
+									"type": "string"
+								},
+								{
+									"key": "accessTokenUrl",
+									"value": "https://simulator-api.db.com:443/gw/oidc/token",
+									"type": "string"
+								},
+								{
+									"key": "authUrl",
+									"value": "https://simulator-api.db.com:443/gw/oidc/authorize",
+									"type": "string"
+								},
+								{
+									"key": "grant_type",
+									"value": "authorization_code",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Correlation-Id",
+								"value": "<string>",
+								"description": "Free form key controlled by the caller e.g. uuid"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/?iban=DE00500700100200028924&limit=10&offset=0&accountTypeFilter=ALL",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								""
+							],
+							"query": [
+								{
+									"key": "iban",
+									"value": "DE00500700100200028924",
+									"description": "IBAN representing an account of the current user."
+								},
+								{
+									"key": "currencyCode",
+									"value": "WLU",
+									"description": "ISO 4217 Alpha 3 currency code.",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "10",
+									"description": "the number of items of a page."
+								},
+								{
+									"key": "offset",
+									"value": "0",
+									"description": "the page to be returned."
+								},
+								{
+									"key": "accountTypeFilter",
+									"value": "ALL",
+									"description": "optional - filter the result by account type, default ALL."
+								}
+							]
+						},
+						"description": "Reads all accounts of a customer. If given IBAN is not valid or does not represent an account of the current user, an empty result is returned."
+					},
+					"response": [
+						{
+							"name": "successful operation",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Correlation-Id",
+										"value": "<string>",
+										"description": "Free form key controlled by the caller e.g. uuid"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "<token>",
+										"description": "Added as a part of security scheme: oauth2"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/?iban=KF093IRAG93WTCGNXYLYBXGM6K36X97YEJ&currencyCode=WLU&limit=10&offset=0&accountTypeFilter=ALL",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									],
+									"query": [
+										{
+											"key": "iban",
+											"value": "KF093IRAG93WTCGNXYLYBXGM6K36X97YEJ",
+											"description": "IBAN representing an account of the current user."
+										},
+										{
+											"key": "currencyCode",
+											"value": "WLU",
+											"description": "ISO 4217 Alpha 3 currency code."
+										},
+										{
+											"key": "limit",
+											"value": "10",
+											"description": "the number of items of a page."
+										},
+										{
+											"key": "offset",
+											"value": "0",
+											"description": "the page to be returned."
+										},
+										{
+											"key": "accountTypeFilter",
+											"value": "ALL",
+											"description": "optional - filter the result by account type, default ALL."
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"totalItems\": \"<integer>\",\n  \"limit\": \"<integer>\",\n  \"offset\": \"<integer>\",\n  \"accounts\": [\n    {\n      \"accountType\": \"<string>\",\n      \"iban\": \"HD19F1IDWRSPD4OH8XZHS57B7\",\n      \"productDescription\": \"<string>\",\n      \"currencyCode\": \"YIH\",\n      \"bic\": \"<string>\",\n      \"currentBalance\": \"<number>\"\n    },\n    {\n      \"accountType\": \"<string>\",\n      \"iban\": \"LA37E2X0IKD6EE\",\n      \"productDescription\": \"<string>\",\n      \"currencyCode\": \"MYB\",\n      \"bic\": \"<string>\",\n      \"currentBalance\": \"<number>\"\n    }\n  ]\n}"
+						},
+						{
+							"name": "Unsuccessful operation, returns http status 400. See 'example' property for possible values.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Correlation-Id",
+										"value": "<string>",
+										"description": "Free form key controlled by the caller e.g. uuid"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "<token>",
+										"description": "Added as a part of security scheme: oauth2"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/?iban=KF093IRAG93WTCGNXYLYBXGM6K36X97YEJ&currencyCode=WLU&limit=10&offset=0&accountTypeFilter=ALL",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									],
+									"query": [
+										{
+											"key": "iban",
+											"value": "KF093IRAG93WTCGNXYLYBXGM6K36X97YEJ",
+											"description": "IBAN representing an account of the current user."
+										},
+										{
+											"key": "currencyCode",
+											"value": "WLU",
+											"description": "ISO 4217 Alpha 3 currency code."
+										},
+										{
+											"key": "limit",
+											"value": "10",
+											"description": "the number of items of a page."
+										},
+										{
+											"key": "offset",
+											"value": "0",
+											"description": "the page to be returned."
+										},
+										{
+											"key": "accountTypeFilter",
+											"value": "ALL",
+											"description": "optional - filter the result by account type, default ALL."
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\",\n  \"messageId\": \"<string>\"\n}"
+						},
+						{
+							"name": "Unsuccessful operation, returns http status 401. See 'example' property for possible values.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Correlation-Id",
+										"value": "<string>",
+										"description": "Free form key controlled by the caller e.g. uuid"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "<token>",
+										"description": "Added as a part of security scheme: oauth2"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/?iban=KF093IRAG93WTCGNXYLYBXGM6K36X97YEJ&currencyCode=WLU&limit=10&offset=0&accountTypeFilter=ALL",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									],
+									"query": [
+										{
+											"key": "iban",
+											"value": "KF093IRAG93WTCGNXYLYBXGM6K36X97YEJ",
+											"description": "IBAN representing an account of the current user."
+										},
+										{
+											"key": "currencyCode",
+											"value": "WLU",
+											"description": "ISO 4217 Alpha 3 currency code."
+										},
+										{
+											"key": "limit",
+											"value": "10",
+											"description": "the number of items of a page."
+										},
+										{
+											"key": "offset",
+											"value": "0",
+											"description": "the page to be returned."
+										},
+										{
+											"key": "accountTypeFilter",
+											"value": "ALL",
+											"description": "optional - filter the result by account type, default ALL."
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\",\n  \"messageId\": \"<string>\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "brand",
+			"item": [
+				{
+					"name": "Retrieves brand information for a given IBAN.",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "scope",
+									"value": "read_brand",
+									"type": "string"
+								},
+								{
+									"key": "accessTokenUrl",
+									"value": "https://simulator-api.db.com:443/gw/oidc/token",
+									"type": "string"
+								},
+								{
+									"key": "grant_type",
+									"value": "client_credentials",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Correlation-Id",
+								"value": "<string>",
+								"description": "Free form key controlled by the caller e.g. uuid"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/brand?iban=KF093IRAG93WTCGNXYLYBXGM6K36X97YEJ",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"brand"
+							],
+							"query": [
+								{
+									"key": "iban",
+									"value": "KF093IRAG93WTCGNXYLYBXGM6K36X97YEJ",
+									"description": "(Required) IBAN representing an account of a customer"
+								}
+							]
+						},
+						"description": "Retrieves the brand for a given IBAN. This endpoint is applicable to specific use-cases only. Please get in touch with us on specifics."
+					},
+					"response": [
+						{
+							"name": "successful operation",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Correlation-Id",
+										"value": "<string>",
+										"description": "Free form key controlled by the caller e.g. uuid"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "<token>",
+										"description": "Added as a part of security scheme: oauth2"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/brand?iban=KF093IRAG93WTCGNXYLYBXGM6K36X97YEJ",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"brand"
+									],
+									"query": [
+										{
+											"key": "iban",
+											"value": "KF093IRAG93WTCGNXYLYBXGM6K36X97YEJ",
+											"description": "(Required) IBAN representing an account of a customer"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"brand\": \"NORISBANK\"\n}"
+						},
+						{
+							"name": "Unsuccessful operation, returns http status 400. See 'example' property for possible values.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Correlation-Id",
+										"value": "<string>",
+										"description": "Free form key controlled by the caller e.g. uuid"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "<token>",
+										"description": "Added as a part of security scheme: oauth2"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/brand?iban=KF093IRAG93WTCGNXYLYBXGM6K36X97YEJ",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"brand"
+									],
+									"query": [
+										{
+											"key": "iban",
+											"value": "KF093IRAG93WTCGNXYLYBXGM6K36X97YEJ",
+											"description": "(Required) IBAN representing an account of a customer"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\",\n  \"messageId\": \"<string>\"\n}"
+						},
+						{
+							"name": "Unsuccessful operation, returns http status 401. See 'example' property for possible values.",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Correlation-Id",
+										"value": "<string>",
+										"description": "Free form key controlled by the caller e.g. uuid"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "<token>",
+										"description": "Added as a part of security scheme: oauth2"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/brand?iban=KF093IRAG93WTCGNXYLYBXGM6K36X97YEJ",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"brand"
+									],
+									"query": [
+										{
+											"key": "iban",
+											"value": "KF093IRAG93WTCGNXYLYBXGM6K36X97YEJ",
+											"description": "(Required) IBAN representing an account of a customer"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"code\": \"<integer>\",\n  \"message\": \"<string>\",\n  \"messageId\": \"<string>\"\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://simulator-api.db.com:443/gw/dbapi/banking/cashAccounts/v2"
+		}
+	]
+}
