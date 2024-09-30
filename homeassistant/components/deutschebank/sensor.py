@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from dataclasses import dataclass
+from pprint import pprint
 from typing import Any
 
 from homeassistant.components.sensor import (
@@ -33,17 +34,9 @@ ACCOUNT_SENSORS = (
     DeutscheBankSensorEntityDescription(
         key="balance",
         translation_key="balance",
-        value_fn=lambda data: data["balance"]["balance"] / 100,
+        value_fn=lambda data: data["balance"],
         device_class=SensorDeviceClass.MONETARY,
         native_unit_of_measurement="EUR",
-        suggested_display_precision=2,
-    ),
-    DeutscheBankSensorEntityDescription(
-        key="total_balance",
-        translation_key="total_balance",
-        value_fn=lambda data: data["balance"]["total_balance"] / 100,
-        device_class=SensorDeviceClass.MONETARY,
-        native_unit_of_measurement="GBP",
         suggested_display_precision=2,
     ),
 )
@@ -68,7 +61,6 @@ async def async_setup_entry(
         for entity_description in ACCOUNT_SENSORS
         for index, account in enumerate(coordinator.data.accounts)
     ]
-
     async_add_entities(accounts)
 
 
@@ -96,6 +88,7 @@ class DeutscheBankSensor(DeutscheBankBaseEntity, SensorEntity):
 
         try:
             state = self.entity_description.value_fn(self.data)
+            pprint(state)  # noqa: T203
         except (KeyError, ValueError):
             return None
 

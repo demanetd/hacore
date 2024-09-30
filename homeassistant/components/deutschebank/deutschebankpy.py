@@ -63,17 +63,11 @@ class AbstractDeutscheBankApi(ABC):  # pylint: disable=too-few-public-methods
         return data_dict
 
 
-INVALID_ACCOUNT_TYPES = ["uk_monzo_flex_backing_loan", "uk_prepaid"]
+INVALID_ACCOUNT_TYPES = ["no_invalid"]
 
-CURRENT_ACCOUNT = "uk_retail"
+CURRENT_ACCOUNT = "CURRENT_ACCOUNT"
 
-ACCOUNT_NAMES = {
-    CURRENT_ACCOUNT: "Current Account",
-    "uk_retail_joint": "Joint Account",
-    "uk_monzo_flex": "Flex",
-    "uk_business": "Business Account",
-    "uk_rewards": "Cashback",
-}
+ACCOUNT_NAMES = {CURRENT_ACCOUNT: "Current Account"}
 
 TOKEN_EXPIRY_CODE = "unauthorized.bad_access_token.expired"
 CODE = "code"
@@ -95,17 +89,18 @@ class UserAccount:
         accounts = await self._get_accounts()
         for account in accounts:
             try:
-                if account["type"] not in INVALID_ACCOUNT_TYPES:
-                    balance = await self._request(
-                        "get", "balance", params={"account_id": account["id"]}
-                    )
+                if account["accountType"] not in INVALID_ACCOUNT_TYPES:
+                    # balance = await self._request(
+                    #    "get", "balance", params={"account_id": account["id"]}
+                    # )
 
                     result.append(
                         {
-                            "id": account["id"],
-                            "name": ACCOUNT_NAMES.get(account["type"], account["type"]),
-                            "type": account["type"],
-                            "balance": balance,
+                            "id": account["iban"],
+                            "name": account["productDescription"],
+                            "type": account["accountType"],
+                            "balance": account["currentBalance"],
+                            "currency": account["currencyCode"],
                         }
                     )
             except KeyError:
@@ -118,8 +113,8 @@ class UserAccount:
         valid_accounts = []
         try:
             for acc in res["accounts"]:
-                if acc["type"] not in INVALID_ACCOUNT_TYPES:
-                    self._account_ids.add(acc["id"])
+                if acc["accountType"] not in INVALID_ACCOUNT_TYPES:
+                    self._account_ids.add(acc["iban"])
                     valid_accounts.append(acc)
         except KeyError:
             await _raise_auth_or_response_error(res)

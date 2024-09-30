@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import base64
 from collections.abc import Mapping
+import json
 import logging
 from typing import Any
 
@@ -50,7 +52,12 @@ class DeutscheBankFlowHandler(
     async def async_oauth_create_entry(self, data: dict[str, Any]) -> ConfigFlowResult:
         """Create an entry for the flow."""
         self.oauth_data = data
-        user_id = data[CONF_TOKEN]["user_id"]
+        id_token = data[CONF_TOKEN]["id_token"]
+        id_b64 = id_token.split(".")[1]
+        id_b64 = f"{id_b64}{'=' * ((4 - len(id_b64) % 4) % 4)}"
+        id_json = base64.b64decode(id_b64).decode("ascii")
+        id_parsed = json.loads(id_json)
+        user_id = id_parsed["sub"]
         if not self.reauth_entry:
             await self.async_set_unique_id(user_id)
             self._abort_if_unique_id_configured()

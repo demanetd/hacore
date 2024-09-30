@@ -35,9 +35,6 @@
     "sensor": {
       "balance": {
         "name": "Balance"
-      },
-      "total_balance": {
-        "name": "Total balance"
       }
     }
   }
