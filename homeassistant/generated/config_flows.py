@@ -117,6 +117,7 @@ FLOWS = {
         "deconz",
         "deluge",
         "denonavr",
+        "deutschebank",
         "devialet",
         "devolo_home_control",
         "devolo_home_network",

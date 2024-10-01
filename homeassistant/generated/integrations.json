@@ -1160,6 +1160,12 @@
         }
       }
     },
+    "deutschebank": {
+      "name": "DeutscheBank",
+      "integration_type": "hub",
+      "config_flow": true,
+      "iot_class": "cloud_polling"
+    },
     "devialet": {
       "name": "Devialet",
       "integration_type": "device",
