@@ -9,8 +9,8 @@
         "description": "The Deutsche Bank integration needs to re-authenticate your account"
       },
       "await_approval_confirmation": {
-        "title": "Confirm in Deutsche Bank app",
-        "description": "Before proceeding, open your Deutsche Bank app and approve the request from Home Assistant.",
+        "title": "Confirm at Deutsche Bank",
+        "description": "Before proceeding, confirm that you approved at Deutsche Bank the request from Home Assistant.",
         "data": {
           "confirm": "I've approved"
         }

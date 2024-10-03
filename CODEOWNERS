@@ -309,6 +309,7 @@ build.json @home-assistant/supervisor
 /tests/components/denonavr/ @ol-iver @starkillerOG
 /homeassistant/components/derivative/ @afaucogney
 /tests/components/derivative/ @afaucogney
+/homeassistant/components/deutschebank/ @
 /homeassistant/components/devialet/ @fwestenberg
 /tests/components/devialet/ @fwestenberg
 /homeassistant/components/device_automation/ @home-assistant/core
