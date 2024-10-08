@@ -2,6 +2,7 @@
 
 from abc import ABC, abstractmethod
 from collections.abc import Awaitable, Callable
+from pprint import pprint
 from typing import Any
 from urllib.parse import urlparse
 
@@ -90,10 +91,9 @@ class UserAccount:
         for account in accounts:
             try:
                 if account["accountType"] not in INVALID_ACCOUNT_TYPES:
-                    # balance = await self._request(
-                    #    "get", "balance", params={"account_id": account["id"]}
-                    # )
-
+                    transactions = await self._get_transactions(
+                        account["iban"], "2020-01-01"
+                    )
                     result.append(
                         {
                             "id": account["iban"],
@@ -101,6 +101,7 @@ class UserAccount:
                             "type": account["accountType"],
                             "balance": account["currentBalance"],
                             "currency": account["currencyCode"],
+                            "transactions": transactions,
                         }
                     )
             except KeyError:
@@ -119,6 +120,30 @@ class UserAccount:
         except KeyError:
             await _raise_auth_or_response_error(res)
         return valid_accounts
+
+    async def _get_transactions(
+        self, ibanAccount: str, bookinDateFrom: str
+    ) -> list[dict[str, Any]]:
+        params = {
+            "iban": ibanAccount,
+            "sortBy": "bookingDate[DESC]",
+            "bookinDateFrom": bookinDateFrom,
+        }
+        res = await self._request("get", "transactions/v2/", params=params)
+        # pprint(res)  # noqa: T203
+        valid_transactions = []
+        try:
+            for trn in res["transactions"]:
+                try:
+                    if trn["counterPartyIban"] != "":
+                        # self._account_ids.add(acc["iban"])
+                        valid_transactions.append(trn)
+                except KeyError:
+                    # just ignore if no counterPartyIban
+                    pass
+        except KeyError:
+            await _raise_auth_or_response_error(res)
+        return valid_transactions
 
     async def register_webhooks(self, webhook_url: str) -> None:
         """Register webhooks for all bank accounts."""
