@@ -2,7 +2,6 @@
 
 from abc import ABC, abstractmethod
 from collections.abc import Awaitable, Callable
-from pprint import pprint
 from typing import Any
 from urllib.parse import urlparse
 
@@ -94,6 +93,12 @@ class UserAccount:
                     transactions = await self._get_transactions(
                         account["iban"], "2020-01-01"
                     )
+                    ibanAmounts: dict[str, Any] = {}
+                    for trn in transactions:
+                        try:
+                            ibanAmounts[trn["counterPartyIban"]] += trn["amount"]
+                        except KeyError:
+                            ibanAmounts[trn["counterPartyIban"]] = trn["amount"]
                     result.append(
                         {
                             "id": account["iban"],
@@ -101,7 +106,7 @@ class UserAccount:
                             "type": account["accountType"],
                             "balance": account["currentBalance"],
                             "currency": account["currencyCode"],
-                            "transactions": transactions,
+                            "ibanAmounts": ibanAmounts,
                         }
                     )
             except KeyError:
@@ -130,7 +135,6 @@ class UserAccount:
             "bookinDateFrom": bookinDateFrom,
         }
         res = await self._request("get", "transactions/v2/", params=params)
-        # pprint(res)  # noqa: T203
         valid_transactions = []
         try:
             for trn in res["transactions"]:

@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from dataclasses import dataclass
-from pprint import pprint
 from typing import Any
 
 from homeassistant.components.sensor import (
@@ -49,7 +48,6 @@ async def async_setup_entry(
 ) -> None:
     """Defer sensor setup to the shared sensor module."""
     coordinator: DeutscheBankCoordinator = hass.data[DOMAIN][config_entry.entry_id]
-    pprint(coordinator.data.accounts)
     accounts = [
         DeutscheBankSensor(
             coordinator,
@@ -57,12 +55,11 @@ async def async_setup_entry(
             index,
             account["name"],
             lambda x: x.accounts,
-            {trn["counterPartyIban"]: trn["amount"] for trn in account["transactions"]},
+            account["ibanAmounts"],
         )
         for entity_description in ACCOUNT_SENSORS
         for index, account in enumerate(coordinator.data.accounts)
     ]
-    pprint(accounts)
 
     async_add_entities(accounts)
 
@@ -79,7 +76,7 @@ class DeutscheBankSensor(DeutscheBankBaseEntity, SensorEntity):
         index: int,
         device_model: str,
         data_accessor: Callable[[DeutscheBankData], list[dict[str, Any]]],
-        _attributes: dict[str, Any],
+        _attributes: dict[str, float],
     ) -> None:
         """Initialize the sensor."""
         super().__init__(coordinator, index, device_model, data_accessor)
@@ -93,13 +90,13 @@ class DeutscheBankSensor(DeutscheBankBaseEntity, SensorEntity):
 
         try:
             state = self.entity_description.value_fn(self.data)
-            pprint(state)  # noqa: T203
+            self._attributes = self.data["ibanAmounts"]
         except (KeyError, ValueError):
             return None
 
         return state
 
     @property
-    def extra_state_attributes(self) -> dict[str, str]:
+    def extra_state_attributes(self) -> dict[str, float]:
         """Return attributes for the sensor."""
         return self._attributes
